@@ -1,0 +1,75 @@
+# System Configuration
+
+system:
+  name: "Board Meeting Management System"
+  version: "1.0.0"
+  log_level: "INFO"
+  debug_mode: false
+
+llm:
+  provider: "openai"
+  model: "gpt-4"
+  temperature: 0.2
+  max_tokens: 2000
+  api_key: "${OPENAI_API_KEY}"  # Will be loaded from environment variables
+
+vector_store:
+  type: "chroma"
+  embedding_model: "sentence-transformers/all-mpnet-base-v2"
+  collection_name: "board_meetings"
+  persist_directory: "./data/vector_store"
+
+audio:
+  sample_rate: 16000
+  channels: 1
+  chunk_size: 1024
+  format: "wav"
+  silence_threshold: 500
+  silence_duration: 1.0  # seconds
+  
+integrations:
+  jira:
+    enabled: true
+    base_url: "${JIRA_BASE_URL}"
+    username: "${JIRA_USERNAME}"
+    api_token: "${JIRA_API_TOKEN}"
+    project_key: "BOARD"
+    
+  slack:
+    enabled: true
+    token: "${SLACK_BOT_TOKEN}"
+    channel: "board-actions"
+    
+  email:
+    enabled: true
+    smtp_server: "${SMTP_SERVER}"
+    smtp_port: 587
+    username: "${EMAIL_USERNAME}"
+    password: "${EMAIL_PASSWORD}"
+    from_address: "board-assistant@company.com"
+
+agents:
+  transcriber:
+    confidence_threshold: 0.85
+    speaker_diarization: true
+    language: "en-US"
+    
+  semantic_parser:
+    min_confidence_score: 0.7
+    context_window_size: 10  # Number of utterances to consider for context
+    
+  decision_tracker:
+    min_decision_confidence: 0.8
+    min_action_confidence: 0.75
+    action_item_detection_threshold: 0.7
+    
+  orchestration:
+    reminder_schedule:
+      initial_reminder: 3  # days before due date
+      followup_reminder: 1  # day before due date
+    escalation_threshold: 7  # days after due date
+    
+  memory:
+    retention_period: 365  # days
+    recency_weight: 0.8
+    relevance_threshold: 0.6
