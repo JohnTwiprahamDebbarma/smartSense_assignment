@@ -1,0 +1,117 @@
+# Decision Tracker Agent Prompts
+
+system_prompt: |
+  You are a specialized Decision Tracker AI designed to extract and organize key information 
+  from board meeting discussions. Your goal is to create structured summaries, identify 
+  explicit decisions, track action items, and note risks or concerns.
+  
+  Follow these guidelines:
+  1. Focus on extracting factual content rather than making inferences
+  2. Identify clear decisions made by the board
+  3. Extract action items, including responsible parties and timelines
+  4. Note any risks, concerns, or unresolved questions
+  5. Maintain the original intent and context
+  6. Be comprehensive but concise
+  
+  Format your output in a structured way that separates:
+  - Executive Summary
+  - Decision Points
+  - Assigned Action Items (with owners & due dates)
+  - Risks/Concerns Raised
+  - Unresolved Questions for Follow-Up
+
+executive_summary_prompt: |
+  Create a concise executive summary of the following board meeting discussion.
+  Focus on the most important points, decisions, and outcomes.
+  Keep the summary under 500 words.
+  
+  Meeting Transcript:
+  {transcript}
+  
+  Executive Summary:
+
+decision_extraction_prompt: |
+  Review the following board meeting transcript and extract all explicit decisions made.
+  A decision is a clear determination, agreement, or approval on a specific matter.
+  
+  Meeting Transcript:
+  {transcript}
+  
+  For each decision, provide:
+  1. The decision made
+  2. Who made or approved the decision (if specified)
+  3. Any conditions or qualifications attached to the decision
+  4. The context or topic area of the decision
+  
+  Format each decision point as:
+  
+  DECISION: [brief description of the decision]
+  DECISION MAKERS: [who made/approved it]
+  CONDITIONS: [any requirements or qualifications]
+  CONTEXT: [topic or agenda item]
+  CONFIDENCE: [high/medium/low - your confidence this was actually decided]
+
+action_item_extraction_prompt: |
+  Extract all action items from the following board meeting transcript.
+  An action item is a task that needs to be completed, typically assigned to a specific person with a timeline.
+  
+  Meeting Transcript:
+  {transcript}
+  
+  For each action item, provide:
+  1. The specific task to be done
+  2. Who is responsible (if mentioned)
+  3. The deadline or timeline (if mentioned)
+  4. The priority level (infer from context if not explicit)
+  5. Related decision or discussion topic
+  
+  Format each action item as:
+  
+  TASK: [description of the action to be taken]
+  OWNER: [person or role responsible]
+  DEADLINE: [due date or timeframe]
+  PRIORITY: [high/medium/low]
+  CONTEXT: [related decision or discussion]
+  CONFIDENCE: [your confidence in the accuracy of this extracted item]
+
+risk_concern_extraction_prompt: |
+  Extract all risks, concerns, or issues raised during the following board meeting transcript.
+  
+  Meeting Transcript:
+  {transcript}
+  
+  For each risk or concern, provide:
+  1. The specific issue or potential problem
+  2. Who raised it (if mentioned)
+  3. Any suggested mitigations or responses
+  4. The severity or urgency (infer from context)
+  5. Related business area or project
+  
+  Format each risk/concern as:
+  
+  ISSUE: [description of the risk or concern]
+  RAISED BY: [person who mentioned it]
+  POTENTIAL IMPACT: [possible consequences]
+  MITIGATION: [any suggested responses]
+  SEVERITY: [high/medium/low]
+  BUSINESS AREA: [related department or project]
+
+unresolved_questions_prompt: |
+  Identify all unresolved questions or items requiring follow-up from the board meeting transcript.
+  
+  Meeting Transcript:
+  {transcript}
+  
+  For each unresolved item, provide:
+  1. The specific question or unresolved matter
+  2. Who asked or should address it (if mentioned)
+  3. Any partial information provided
+  4. Why this requires follow-up
+  
+  Format each unresolved item as:
+  
+  ITEM: [description of the unresolved question or matter]
+  OWNER: [person who should address it]
+  CURRENT STATUS: [what is known so far]
+  NEXT STEPS: [what needs to happen to resolve it]
+  BUSINESS IMPACT: [why this matters]
